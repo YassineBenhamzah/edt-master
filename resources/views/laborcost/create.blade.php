@@ -31,35 +31,39 @@
                             <form action="{{ route("laborcosts.store") }}" method="post">
                                 @csrf
                             <div class="form-group">
-                                <label for="">User_id</label>
+                                <label for="">User Name</label>
                                 <select name="user_id" id="user_id" class="form-control">
                                     @foreach ($users as $user)
                                     <option value="{{ $user->id }}"> {{ $user->name }}</option>
                                     @endforeach
                                 </select><br>
-                                <label for="">startingdate</label>
+                                <label for="">starting date</label>
                                 <input
                                     type="date" name="startingdate" id="startingdate"
                                     class="form-control"
                                     placeholder="startingdate"
+                                    value="{{old('startingdate')}}"
                                 ><br>
-                                <label for="">finaldate</label>
+                                <label for="">final date</label>
                                 <input
                                     type="date" name="finaldate" id="finaldate"
                                     class="form-control"
                                     placeholder="finaldate"
+                                    value="{{old('finaldate')}}"
                                 ><br>
                                 <label for="">cost</label>
                                 <input
                                     type="text" name="cost" id="cost"
                                     class="form-control"
                                     placeholder="cost"
+                                    value="{{old('cost')}}"
                                 ><br>
-                                <label for="">isarchived</label>
+                                <label for="">is archived</label>
                                 <input
                                     type="number" name="isarchived" id="isarchived"
                                     class="form-control"
                                     placeholder="isarchived"
+                                    value="{{old('isarchived')}}"
                                 ><br>
 
                                 <button class="btn btn-primary">

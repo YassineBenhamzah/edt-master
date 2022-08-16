@@ -43,17 +43,8 @@ class ProjetController extends Controller
                 if (($searchmontant_ttc = $request->searchmontant_ttc )){
                     $query->orWhere('montant_ttc' , 'LIKE' , '%' . $searchmontant_ttc . '%')->get();
                 }
-                /* if($request->search == null || $request->searchTy == null || $request->searchetattech == null || $request->searchetatfin == null || $request->searchmontant_ttc == null){
-                    $client = Client::where("nom",'LIKE' , '%' . $request->searchref . '%')->first();
-                    $projets = $client->projets;
-                    return view("projet.index")->with("projets" , $projets);
-                 } */
-
-
             }]
         ])->orderBy('id' ,'DESC')->get();
-
-
         return view("projet.index")->with('projets' , $projets);
 
 

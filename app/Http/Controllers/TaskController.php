@@ -39,7 +39,7 @@ class TaskController extends Controller
         $projets = Projet::all();
         return view("task.index")->with([
 
-            "tasks" => task::simplePaginate(4)
+            "tasks" => task::cursorPaginate(4)
         ])->with('projets' , $projets)->with('clients' , $clients);
     }
 

@@ -104,6 +104,7 @@ Route::get('send-mail', function () {
 
     dd("Email is Sent.");
 });
+/* Route::prefix('user')->middleware(['auth'])->group(function () { */
 
 //tasks
 Route::get('/tasks', [TaskController::class , 'index'])->name('tasks.index');
@@ -126,6 +127,7 @@ Route::delete('/conges/{demcong}', [DemcongController::class , 'destroy'])->name
 Route::get('/conges/create', [DemcongController::class , 'create'])->name('conges.create');
 Route::post('/conges', [DemcongController::class , 'store'])->name('conges.store');
 Route::match(["Get" , "post"] ,"SearchUser",[DemcongController::class , 'SearchUser'])->name('SearchUser');
+/* }); */
 
 
 

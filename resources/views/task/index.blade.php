@@ -15,21 +15,28 @@
     @include('navbar.navbar')
     <div class="container d-flex justify-content-center">
             <div class="col-md-8 table-center">
-                <table class="table table-bordered border-dark table-striped table-hover" id="datatable">
+                <table class="table table-bordered border-dark table-striped table-hover" @auth @if (auth()->user()->role_id ) id="datatable" @else @endif @endauth>
                     @if (Auth::check())
                     @if (auth()->user()->role_id )
                     <form action="{{ url('SearchTask') }}" role="search" method="POST" >
                         @csrf
-                    <input type="text" name="searchref" class="form-control" id="term"  placeholder=""><br>
+                    {{-- <input type="text"  name="searchref" class="form-control" id="term"  placeholder=""><br>
                     <Label>First date</Label>
                     <input type="date" name="startDate" class="form-control" id="dateFrom" placeholder="search" class="mt-3 m-1"><br>
                     <Label class='form'>Last date</Label>
                     <input type="date" name="endDate" id="dateTo" class="form-control" placeholder="search"><br>
-                    <button type="submit" class="btn btn-primary justify-content-center">Search</button><br>
-                    <select name="" id="" class="form-control filter-select" >
+                    <button type="submit" class="btn btn-primary justify-content-center">Search</button><br> --}}
+                     <select name="" id="table-filter" data-column="0" class="form-control filter-select" >
                         <option value="">Select Name</option>
                         @foreach ($tasks as $task)
                           <option value="{{\App\Models\Client::find($task->client_id)->nom}}">{{ \App\Models\Client::find($task->client_id)->nom }}</option>
+                        @endforeach
+                        <option value=""></option>
+                    </select><br>
+                    <select name="" id="table-filter-ref" data-column="0" class="form-control filter-select" >
+                        <option value="">Select Ref</option>
+                        @foreach ($tasks as $task)
+                          <option value="{{ \App\Models\projet::find($task->projet_id)->ref }}">{{ \App\Models\projet::find($task->projet_id)->ref }}</option>
                         @endforeach
                         <option value=""></option>
                     </select><br>
@@ -81,72 +88,18 @@
                     </tbody>
 
                   </table>
-                  {{$tasks->render()}}
+
             </div>
         </div>
      <div class="d-flex justify-content-center">
         <a href="{{route('tasks.create')}}">Create Task</a>
-     </div>
-     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        ADD Task
-      </button>
-      <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <h3 class="text-secondary border-bottom mb-3 p-2">
-                Ajouter Un task
-           </h3>
-           <form action="{{ route("tasks.store") }}" method="post">
-               @csrf
-           <div class="form-group">
-               <label for="">projet_id</label>
-               <select name="projet_id" id="projet_id" class="form-control">
-                   @foreach ($projets as $projet)
-                   <option value="{{ $projet->id }}"> {{ $projet->objet }}</option>
-                   @endforeach
-               </select><br>
-               <label for="">client_id</label>
-               <select name="client_id" id="client_id" class="form-control">
-                   @foreach ($clients as $client)
-                   <option value="{{ $client->id }}"> {{ $client->nom }}</option>
-                   @endforeach
-               </select><br>
-               <label for="">datedebut</label>
-               <input
-                   type="date" name="datedebut" id="datedebut"
-                   class="form-control"
-                   placeholder="datedebut"
-               ><br>
-               <label for="">datefin</label>
-               <input
-                   type="date" name="datefin" id="datefin"
-                   class="form-control"
-                   placeholder="datefin"
-               ><br>
-               <label for="">nombre_heure</label>
-               <input
-                   type="time" name="nombre_heure" id="nombre_heure"
-                   class="form-control"
-                   placeholder="nombre_heure"
-               ><br>
+     </div><br>
 
-               <button class="btn btn-primary">
-                   Valider
-               </button>
-           </div>
-           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
+     <div class="d-flex justify-content-center">
+        {{ $tasks->links() }}
+     </div>
+
+
     </div>
   </div>
   <script src="https://momentjs.com/downloads/moment.js"></script>
@@ -163,22 +116,28 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/b-1.6.2/b-flash-1.6.2/b-html5-1.6.2/b-print-1.6.2/datatables.min.js"> </script>
     <script>
-        $(document).ready(function(){
-            var table = $('#datatable').DataTable({
-                'processing': true,
-                'serverSide': true,
-                'ajax' : "{{ route('tasks.index') }}"
-                'columns' :[
-                    {'data' : 'nom'},
-                ]
-            });
-            $('.filter-select').change(function){
-            table.column( $(this).data('column'))
-            .search( $(this).val())
-            .draw();
-        });
+       var table11 =$('#datatable').DataTable({
+        dom: 'Bftrip',
+        "bFilter": true,
+        "bInfo": false,
+        "paging": false,
+        /*  language: {
+            paginate: {
+            previous: "<i class='fas fa-angle-left'>",
+            next: "<i class='fas fa-angle-right'>"
+            }
+        }, */
+        buttons: []
+
     });
+    $('#table-filter').on('change', function(){
+         table11.columns(0).search(this.value).draw();
+     });
+     $('#table-filter-ref').on('change', function(){
+         table11.columns(1).search(this.value).draw();
+     });
 
     </script>
   </body>

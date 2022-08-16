@@ -60,12 +60,17 @@
                 @endif
             </li>
             <li>
+                @if (Auth::check())
 
                 <a class="nav-link active text-white font-weight-light fst-italic text-monospace"href="{{route('tasks.index')}}"> tasks</a>
 
+                @endif
             </li>
             <li>
-                <a class="nav-link active text-white font-weight-light fst-italic text-monospace" href="{{route('conges.index')}}"> Congé </a>
+
+                @if (Auth::check())
+             <a class="nav-link active text-white font-weight-light fst-italic text-monospace" href="{{route('conges.index')}}"> Congé </a>
+             @endif
             </li>
           <!--dropdown -->
                                  @guest

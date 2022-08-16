@@ -22,20 +22,18 @@
     <div class="container d-flex justify-content-center">
 
             <div class="col-md-8 table-center">
-                <table class="table table-bordered border-dark table-striped table-hover">
+                <table class="table table-bordered border-dark table-striped table-hover " @auth @if (auth()->user()->role_id ) id="datatable" @else @endif @endauth>
                     @if (Auth::check())
                     @if (auth()->user()->role_id )
-                    <form action="{{route('SearchUser')}}" role="search" method="POST" >
-                        @csrf
-                    <input type="text" name="term" class="form-control" id="term"  placeholder=""><br>
-                    <Label>First date</Label>
-                    <input type="date" name="startDate" class="form-control" id="dateFrom" placeholder="search" class="mt-3 m-1"><br>
-                    <Label class='form'>Last date</Label>
-                    <input type="date" name="endDate" id="dateTo" class="form-control" placeholder="search"><br>
-                    <button type="submit" class="btn btn-primary justify-content-center">Search</button><br>
+                    <select name="" id="table-filter" data-column="0" class="form-control filter-select" >
+                        <option value="">Select Name</option>
+                        @foreach ($demcongs as $demcong)
+                          <option value="{{ \App\Models\User::find($demcong->user_id)->name }}">{{ \App\Models\User::find($demcong->user_id)->name }}</option>
+                        @endforeach
+                        <option value=""></option>
+                    </select><br>
                     @endif
                     @endif
-                    </form>
                     <thead class="table-middle"><br>
                       <tr>
                         <!--<th scope="col">id</th>-->
@@ -100,12 +98,49 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
-    <script src="extensions/filter-control/bootstrap-table-filter-control.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/b-1.6.2/b-flash-1.6.2/b-html5-1.6.2/b-print-1.6.2/datatables.min.js"> </script>
+    <script>
+       var table11 =$('#datatable').DataTable({
+        dom: 'Bftrip',
+        "bFilter": true,
+        "bInfo": false,
+        language: {
+            paginate: {
+            previous: "<i class='fas fa-angle-left'>",
+            next: "<i class='fas fa-angle-right'>"
+            }
+        },
+        buttons: []
+
+    });
+    $('#table-filter').on('change', function(){
+         table11.columns(0).search(this.value).draw();
+     });
+    /*  $('#table-filter-ref').on('change', function(){
+         table11.search(this.value).draw();
+     }); */
+        /* $(document).ready(function(){
+            var table = $('#datatable').DataTable({
+                'processing': true,
+                'serverSide': true,
+                'ajax' : "{{ route('tasks.index') }}"
+                'columns' :[
+                    {'data' : 'nom'}
+                ],
+            });
+            $('.filter-select').change(function){
+            table.column( $(this).data('column'))
+            .search( $(this).val())
+            .draw();
+        }
+        }); */
+    </script>
   </body>
 </html>

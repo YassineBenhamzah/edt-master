@@ -31,96 +31,133 @@
                             </h3>
                             <form action="{{ route("cautions.store") }}" method="post">
                                 @csrf
-                            <div class="form-group">
-                                <label for="">Appel Offres</label>
+                                   <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="">Appel Offres</label>
                                 <select name="appeloffres_id" id="appeloffres_id" class="form-control">
                                     @foreach ($appeloffres as $appeloffre)
                                     <option value="{{ $appeloffre->id }}"> {{ $appeloffre->ref }}</option>
                                     @endforeach
                                 </select><br>
-                                <label for="">Projet</label>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Projet</label>
                                 <select name="projet_id" id="projet_id" class="form-control">
                                     @foreach ($projets as $projet)
                                     <option value="{{ $projet->id }}"> {{ $projet->ref }}</option>
                                     @endforeach
                                 </select><br>
-                                <label for="">montant</label>
-                                <input
-                                    type="text" name="montant" id="montant"
-                                    class="form-control"
-                                    placeholder="montant"
-                                ><br>
-                                <p>Type Caution</p>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">montant</label>
+                                        <input
+                                            type="text" name="montant" id="montant"
+                                            class="form-control"
+                                            placeholder="montant"
+                                        ><br>
+                                    </div>
+                                   </div>
+                                   <div class="row">
+                                    <div class="col">
+                                        <label for="">Type Caution</label>
                                 <select name="typecaution" id="typecaution" class="form-control" aria-placeholder="typecaution">
                                     <option value="definitive" >definitive</option>
                                     <option value="provisoire"  >provisoire</option>
                                 </select><br>
-                                <label for="">datedebit</label>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">datedebit</label>
                                 <input
                                     type="date" name="datedebit" id="datedebit"
                                     class="form-control"
                                     placeholder="datedebit"
 
                                 ><br>
-                                <label for="">bqdebit</label>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">bqdebit</label>
                                 <input
                                     type="text" name="bqdebit" id="bqdebit"
                                     class="form-control"
                                     placeholder="bqdebit"
                                 ><br>
-                                <label for="">refchq</label>
-                                <input
-                                    type="text" name="refchq" id="refchq"
-                                    class="form-control"
-                                    placeholder="refchq"
-                                ><br>
-                                <label for="">dateconstitution</label>
-                                <input
-                                    type="date" name="dateconstitution" id="dateconstitution"
-                                    class="form-control"
-                                    placeholder="dateconstitution"
-                                ><br>
-                                <label for="">daterestitution</label>
-                                <input
-                                type="date" name="daterestitution" id="daterestitution"
-                                class="form-control"
-                                placeholder="daterestitution"
-                                ><br>
-                                <label for="">datecredit</label>
+                                    </div>
+                                   </div>
+                                   <div class="row">
+                                    <div class="col">
+                                        <label for="">refchq</label>
+                                        <input
+                                            type="text" name="refchq" id="refchq"
+                                            class="form-control"
+                                            placeholder="refchq"
+                                        ><br>
+                                    </div>
+                                    <div class="col">
+                                                <label for="">dateconstitution</label>
+                                        <input
+                                            type="date" name="dateconstitution" id="dateconstitution"
+                                            class="form-control"
+                                            placeholder="dateconstitution"
+                                        ><br>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">daterestitution</label>
+                                        <input
+                                        type="date" name="daterestitution" id="daterestitution"
+                                        class="form-control"
+                                        placeholder="daterestitution"
+                                        ><br>
+                                    </div>
+                                   </div>
+                                   <div class="row">
+                                    <div class="col">
+                                        <label for="">datecredit</label>
                                 <input
                                 type="date" name="datecredit" id="datecredit"
                                 class="form-control"
                                 placeholder="datecredit"
 
                                 ><br>
-                                <label for="">bqcredit</label>
-                                <input
-                                type="text" name="bqcredit" id="bqcredit"
-                                class="form-control"
-                                placeholder="bqcredit"
-                                ><br>
-
-                                <p>Moyen Crédit</p>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">bqcredit</label>
+                                        <input
+                                        type="text" name="bqcredit" id="bqcredit"
+                                        class="form-control"
+                                        placeholder="bqcredit"
+                                        ><br>
+                                    </div>
+                                    <div class="col">
+                                        <label>Crédit</label>
                                 <select name="moycredit" id="moycredit" class="form-control" aria-placeholder="moycredit">
                                     <option value="cheque" >Chéque</option>
                                     <option value="virement"  >Virement</option>
                                 </select><br>
-                                <label for="">datedebit</label>
-                                <input
-                                type="text" name="refcredit" id="refcredit"
-                                class="form-control"
-                                placeholder="refcredit"
-                                ><br>
-                                <p>etat</p>
+                                    </div>
+                                   </div>
+                                   <div class="row">
+                                    <div class="col">
+                                            <label for="">datedebit</label>
+                                    <input
+                                    type="text" name="refcredit" id="refcredit"
+                                    class="form-control"
+                                    placeholder="refcredit"
+                                    ><br>
+                                    </div>
+                                    <div class="col">
+                                        <label>etat</label>
                                 <select name="etat" id="etat" class="form-control" aria-placeholder="moycredit">
                                     <option value="constituee" >constituee</option>
                                     <option value="A restituer"  >A restituer</option>
                                     <option value="restituee"  >restituée</option>
                                 </select><br>
-                                <button class="btn btn-primary">
-                                    Valider
-                                </button>
-                            </div>
+                                    </div>
+                                   </div>
+                                   <div class="row">
+                                    <button class="btn btn-primary">
+                                        Valider
+                                    </button>
+                                   </div>
                             </form>
                         </div>
                     </div>
